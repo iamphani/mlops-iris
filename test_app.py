@@ -24,3 +24,20 @@ def test_pred_virginica():
         # asserting the correct response is received
         assert response.status_code == 200
         assert response.json() == {"flower_class": "Iris Virginica"}
+        assert "datetime_class" in response.json()
+
+ # test to check if Iris Virginica is classified correctly       
+def test_new_testcase1():
+     with TestClient(app) as client:
+          response = client.get("/ping")
+         # asserting the correct response is received
+          assert response.status_code == 200
+          assert response.json() == {"ping": "pong"}
+
+# test to check if Iris Virginica is classified correctly
+def test_new_testcase2():
+   with TestClient(app) as client:
+          response = client.get("/ping")
+         # asserting the correct response is received
+          assert response.status_code == 200
+          assert response.json() == {"ping": "pong"}
