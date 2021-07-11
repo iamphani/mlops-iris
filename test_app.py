@@ -23,7 +23,7 @@ def test_pred_virginica():
         response = client.post("/predict_flower", json=payload)
         # asserting the correct response is received
         assert response.status_code == 200
-        assert response.json() == {"flower_class": "Iris Virginica"}
+        assert response.json() ["flower_class"]=="Iris Virginica"
         assert "datetime" in response.json()
 
  
@@ -37,10 +37,11 @@ def test_new_testcase1():
         "petal_width": 2.5
      }
      with TestClient(app) as client:
-          response = client.get("/predict_flower", json=payload)
+          response = client.post("/predict_flower", json=payload)
          # asserting the correct response is received
           assert response.status_code == 200
-          assert response.json() == {"flower_class": "Iris Versicolour"}
+          assert response.json() ["flower_class"]=="Iris Versicolour"
+          assert "datetime" in response.json()
 
 
 # test to check if Iris Virginica's petal dimensions were classified correctly       
@@ -53,7 +54,8 @@ def test_new_testcase2():
         "petal_width": 0
      }
      with TestClient(app) as client:
-          response = client.get("/predict_flower", json=payload)
+          response = client.post("/predict_flower", json=payload)
          # asserting the correct response is received
           assert response.status_code == 200
-          assert response.json() == {"flower_class": "Iris Setosa"}
+          assert response.json() ["flower_class"]== "Iris Setosa"
+          assert "datetime" in response.json()
