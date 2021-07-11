@@ -1,4 +1,4 @@
-from numpy import datetime64
+from numpy import datetime_as_string
 import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -11,7 +11,7 @@ app = FastAPI(title="Iris Predictor", docs_url="/")
 
 # calling the load_model during startup.
 # this will train the model and keep it loaded for prediction.
-app.add_event_handler("startup", load_model)
+app.add_event_handler("startup", load_model)   
 
 # class which is expected in the payload
 class QueryIn(BaseModel):
@@ -24,7 +24,7 @@ class QueryIn(BaseModel):
 # class which is returned in the response
 class QueryOut(BaseModel):
     flower_class: str
-    datetime_class:datetime64
+    datetime:str
 
 # class which is expected in the payload while re-training
 class FeedbackIn(BaseModel):
@@ -33,7 +33,7 @@ class FeedbackIn(BaseModel):
     petal_length: float
     petal_width: float
     flower_class: str
-
+    
 # Route definitions
 @app.get("/ping")
 # Healthcheck route to ensure that the API is up and running
@@ -46,7 +46,7 @@ def ping():
 # Payload: QueryIn containing the parameters
 # Response: QueryOut containing the flower_class predicted (200)
 def predict_flower(query_data: QueryIn):
-    output = {"flower_class": predict(query_data),"datetime_class":datetime.datetime.now()}
+    output = {"flower_class": predict(query_data),"datetime":datetime.datetime.now().__str__()}
     return output
 
 @app.post("/feedback_loop", status_code=200)
@@ -61,5 +61,5 @@ def feedback_loop(data: List[FeedbackIn]):
 # Main function to start the app when main.py is called
 if __name__ == "__main__":
     # Uvicorn is used to run the server and listen for incoming API requests on 0.0.0.0:8888
-    uvicorn.run("main:app", host="0.0.0.0", port=8888, reload=True)
-   
+    # uvicorn.run("main:app", host="0.0.0.0", port=8888, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=5000, reload=True)
