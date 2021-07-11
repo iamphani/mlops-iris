@@ -15,7 +15,7 @@ def test_pred_virginica():
     # defining a sample payload for the testcase
     payload = {
         "sepal_length": 3,
-        "sepal_width": 4,
+        "sepal_width": 5,
         "petal_length": 3.2,
         "petal_width": 4.4
     }
@@ -31,10 +31,10 @@ def test_pred_virginica():
 def test_new_testcase1():
     # defining a sample payload for the testcase
      payload = {
-        "sepal_length": 3,
-        "sepal_width": 1.4,
-        "petal_length": 3,
-        "petal_width": 2.5
+        "sepal_length": 5.84,
+        "sepal_width": 3.05,
+        "petal_length": 3.76,
+        "petal_width": 1.20
      }
      with TestClient(app) as client:
           response = client.post("/predict_flower", json=payload)
@@ -48,14 +48,14 @@ def test_new_testcase1():
 def test_new_testcase2():
     # defining a sample payload for the testcase
      payload = {
-        "sepal_length": 0,
-        "sepal_width": 0,
-        "petal_length": 0,
-        "petal_width": 0
+        "sepal_length": 5.0,
+        "sepal_width": 3.0,
+        "petal_length": 1.6,
+        "petal_width": 0.2
      }
      with TestClient(app) as client:
           response = client.post("/predict_flower", json=payload)
          # asserting the correct response is received
           assert response.status_code == 200
-          assert response.json() ["flower_class"]== "Iris Setosa"
+          assert response.json() ["flower_class"]=="Iris Setosa"
           assert "datetime" in response.json()
